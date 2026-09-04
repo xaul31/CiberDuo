@@ -14,7 +14,8 @@
 		<p>Selecciona la alternativa más segura para proteger tus cuentas y trabajos.</p>
 		</header>
 
-		<form>
+		<form method="post">
+			{% csrf_token %}
 			<fieldset>
 				<legend>1. Recibes un mensaje que ofrece una beca y solicita tus datos de acceso institucional. ¿Qué haces?</legend>
 				<label><input type="radio" name="pregunta1" value="a"> Entregar la contraseña para asegurar el beneficio.</label><br>
@@ -49,6 +50,11 @@
 				<label><input type="radio" name="pregunta5" value="b"> Usar contraseñas únicas, activar la autenticación multifactor y mantenerlas privadas.</label><br>
 				<label><input type="radio" name="pregunta5" value="c"> Compartirlas con un amigo para no olvidarlas.</label>
 			</fieldset>
+
+			<button class="registration-button" type="submit">Ver resultados</button>
+			{% if buenas is not None %}
+				<p class="form-success">Obtuviste {{ buenas }} de 5 respuestas correctas.</p>
+			{% endif %}
 		</form>
 	</main>
 </body>

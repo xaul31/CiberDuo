@@ -14,7 +14,8 @@
 		<p>Selecciona la alternativa que consideres más segura.</p>
 		</header>
 
-		<form>
+		<form method="post">
+			{% csrf_token %}
 			<fieldset>
 				<legend>1. Recibes un mensaje de tu supuesto nieto pidiendo dinero con urgencia. ¿Qué debes hacer?</legend>
 				<label><input type="radio" name="pregunta1" value="a"> Enviar el dinero de inmediato.</label><br>
@@ -49,6 +50,11 @@
 				<label><input type="radio" name="pregunta5" value="b"> Entrar rápidamente si la página tiene un logotipo conocido.</label><br>
 				<label><input type="radio" name="pregunta5" value="c"> Guardar la contraseña en el navegador del equipo público.</label>
 			</fieldset>
+
+			<button class="registration-button" type="submit">Ver resultados</button>
+			{% if buenas is not None %}
+				<p class="form-success">Obtuviste {{ buenas }} de 5 respuestas correctas.</p>
+			{% endif %}
 		</form>
 	</main>
 </body>
