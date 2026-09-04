@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     {% load static %}
     <meta charset="UTF-8">
@@ -7,129 +8,131 @@
     <title>Seguridad Digital</title>
     <link rel="stylesheet" href="{% static 'ciberduo/styles.css' %}">
 </head>
+
 <body>
     <main class="contenedor">
 
-        <!-- ENCABEZADO -->
+        <section class="navbar">
+            <div class="logo">
+                <a href="{% url 'logout' %}" class="boton boton-logout">
+                    Cerrar sesión
+                </a>
 
-        <section class="encabezado">
+            </div>
 
-            <h1 class="titulo">
-                Seguridad Digital
-                <span>para Ti</span>
-            </h1>
+            <!-- ENCABEZADO -->
 
-            <p class="descripcion">
-                Aprende a protegerte de estafas y fraudes en internet
-                con lecciones cortas y ejercicios prácticos.
+            <section class="encabezado">
+
+                <h1 class="titulo">
+                    Seguridad Digital
+                    <span>para Ti</span>
+                </h1>
+
+                <p class="descripcion">
+                    Aprende a protegerte de estafas y fraudes en internet
+                    con lecciones cortas y ejercicios prácticos.
+                </p>
+
+
+            </section>
+
+
+            <!-- PREGUNTA -->
+
+            <p class="pregunta">
+                ¿QUIÉN ERES TÚ?
             </p>
 
-        </section>
+
+            <!-- TARJETAS -->
+
+            <section class="tarjetas">
 
 
-        <!-- PREGUNTA -->
+                <!-- ADULTO MAYOR -->
 
-        <p class="pregunta">
-            ¿QUIÉN ERES TÚ?
-        </p>
+                <article class="tarjeta adulto">
 
+                    <h2>
+                        Adulto mayor
+                    </h2>
 
-        <!-- TARJETAS -->
+                    <div class="subtitulo">
+                        Aprende a navegar con confianza
+                    </div>
 
-        <section class="tarjetas">
+                    <p>
+                        Consejos claros para estar seguro al
+                        usar internet y el teléfono.
+                    </p>
 
+                    <a href="{% url 'adulto_mayor' %}" class="boton boton-adulto">
+                        Comenzar →
+                    </a>
 
-            <!-- ADULTO MAYOR -->
-
-            <article class="tarjeta adulto">
-
-                <h2>
-                    Adulto mayor
-                </h2>
-
-                <div class="subtitulo">
-                    Aprende a navegar con confianza
-                </div>
-
-                <p>
-                    Consejos claros para estar seguro al
-                    usar internet y el teléfono.
-                </p>
-
-                <a
-                    href="{% url 'adulto_mayor' %}"
-                    class="boton boton-adulto"
-                >
-                    Comenzar →
-                </a>
-
-            </article>
+                </article>
 
 
-            <!-- ESTUDIANTE -->
+                <!-- ESTUDIANTE -->
 
-            <article class="tarjeta estudiante">
+                <article class="tarjeta estudiante">
 
-                <h2>
-                    Estudiante
-                </h2>
+                    <h2>
+                        Estudiante
+                    </h2>
 
-                <div class="subtitulo">
-                    Cuida tu vida digital
-                </div>
+                    <div class="subtitulo">
+                        Cuida tu vida digital
+                    </div>
 
-                <p>
-                    Herramientas prácticas para proteger
-                    tus cuentas y tu información.
-                </p>
+                    <p>
+                        Herramientas prácticas para proteger
+                        tus cuentas y tu información.
+                    </p>
 
-                <a
-                    href="{% url 'estudiantes' %}"
-                    class="boton boton-estudiante"
-                >
-                    Comenzar →
-                </a>
+                    <a href="{% url 'estudiantes' %}" class="boton boton-estudiante">
+                        Comenzar →
+                    </a>
 
-            </article>
+                </article>
 
 
-            <!-- MICROEMPRESARIO -->
+                <!-- MICROEMPRESARIO -->
 
-            <article class="tarjeta microempresario">
+                <article class="tarjeta microempresario">
 
-                <h2>
-                    Microempresario
-                </h2>
+                    <h2>
+                        Microempresario
+                    </h2>
 
-                <div class="subtitulo">
-                    Protege tu proyecto
-                </div>
+                    <div class="subtitulo">
+                        Protege tu proyecto
+                    </div>
 
-                <p>
-                    Buenas prácticas para mantener a salvo
-                    tu negocio y tus clientes.
-                </p>
+                    <p>
+                        Buenas prácticas para mantener a salvo
+                        tu negocio y tus clientes.
+                    </p>
 
-                <a
-                    href="{% url 'empresarios' %}"
-                    class="boton microempresario"
-                >
-                    Comenzar →
-                </a>
+                    <a href="{% url 'empresarios' %}" class="boton microempresario">
+                        Comenzar →
+                    </a>
 
-            </article>
+                </article>
 
 
-        </section>
+            </section>
 
 
-        <!-- PIE -->
+            <!-- PIE -->
 
-        <p class="pie">
-            Cada lección incluye un escenario real,
-            señales de alerta, consejos y un pequeño quiz.
-        </p>
+            <p class="pie">
+                Cada lección incluye un escenario real,
+                señales de alerta, consejos y un pequeño quiz.
+            </p>
 
     </main>
 </body>
+
 </html>

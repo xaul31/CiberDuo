@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
 	{% load static %}
 	<meta charset="UTF-8">
@@ -7,55 +8,77 @@
 	<title>Ciberseguridad para empresarios</title>
 	<link rel="stylesheet" href="{% static 'ciberduo/styles.css' %}">
 </head>
+
 <body>
 	<main class="questionnaire">
 		<header>
-		<h1>Ciberseguridad para empresarios</h1>
-		<p>Selecciona la alternativa más segura para proteger tu empresa.</p>
+			<a href="{% url 'vistaprincipal' %}" class="boton">Volver al Dashboard</a>
+			<h1>Ciberseguridad para empresarios</h1>
+			<p>Selecciona la alternativa más segura para proteger tu empresa.</p>
 		</header>
 
 		<form method="post">
 			{% csrf_token %}
 			<fieldset>
-				<legend>1. Recibes un correo urgente de un proveedor que solicita cambiar la cuenta bancaria para próximos pagos. ¿Qué haces?</legend>
-				<label><input type="radio" name="pregunta1" value="a"> Cambiar los datos inmediatamente para evitar retrasos.</label><br>
-				<label><input type="radio" name="pregunta1" value="b"> Confirmar la solicitud por un canal oficial y conocido del proveedor.</label><br>
-				<label><input type="radio" name="pregunta1" value="c"> Reenviar el correo a todo el equipo para que decida.</label>
+				<legend>1. Recibes un correo urgente de un proveedor que solicita cambiar la cuenta bancaria para
+					próximos pagos. ¿Qué haces?</legend>
+				<label><input type="radio" name="pregunta1" value="a"> Cambiar los datos inmediatamente para evitar
+					retrasos.</label><br>
+				<label><input type="radio" name="pregunta1" value="b"> Confirmar la solicitud por un canal oficial y
+					conocido del proveedor.</label><br>
+				<label><input type="radio" name="pregunta1" value="c"> Reenviar el correo a todo el equipo para que
+					decida.</label>
 			</fieldset>
 
 			<fieldset>
-				<legend>2. Un empleado necesita acceder a información confidencial desde fuera de la oficina. ¿Cuál es la opción más segura?</legend>
-				<label><input type="radio" name="pregunta2" value="a"> Enviarle los archivos por una cuenta personal de correo.</label><br>
-				<label><input type="radio" name="pregunta2" value="b"> Compartir la contraseña de otra persona del equipo.</label><br>
-				<label><input type="radio" name="pregunta2" value="c"> Usar el sistema corporativo con una cuenta individual y autenticación multifactor.</label>
+				<legend>2. Un empleado necesita acceder a información confidencial desde fuera de la oficina. ¿Cuál es
+					la opción más segura?</legend>
+				<label><input type="radio" name="pregunta2" value="a"> Enviarle los archivos por una cuenta personal de
+					correo.</label><br>
+				<label><input type="radio" name="pregunta2" value="b"> Compartir la contraseña de otra persona del
+					equipo.</label><br>
+				<label><input type="radio" name="pregunta2" value="c"> Usar el sistema corporativo con una cuenta
+					individual y autenticación multifactor.</label>
 			</fieldset>
 
 			<fieldset>
-				<legend>3. Un cliente te pide información de su cuenta mediante un mensaje en redes sociales. ¿Qué debes hacer?</legend>
-				<label><input type="radio" name="pregunta3" value="a"> Pedirle que continúe la conversación por los canales oficiales de la empresa.</label><br>
-				<label><input type="radio" name="pregunta3" value="b"> Solicitarle su contraseña para verificar su identidad.</label><br>
-				<label><input type="radio" name="pregunta3" value="c"> Enviarle los datos para demostrar que la empresa es confiable.</label>
+				<legend>3. Un cliente te pide información de su cuenta mediante un mensaje en redes sociales. ¿Qué debes
+					hacer?</legend>
+				<label><input type="radio" name="pregunta3" value="a"> Pedirle que continúe la conversación por los
+					canales oficiales de la empresa.</label><br>
+				<label><input type="radio" name="pregunta3" value="b"> Solicitarle su contraseña para verificar su
+					identidad.</label><br>
+				<label><input type="radio" name="pregunta3" value="c"> Enviarle los datos para demostrar que la empresa
+					es confiable.</label>
 			</fieldset>
 
 			<fieldset>
-				<legend>4. Descubres que un computador de la empresa tiene archivos cifrados y aparece una solicitud de pago. ¿Qué haces primero?</legend>
-				<label><input type="radio" name="pregunta4" value="a"> Pagar de inmediato sin avisar a nadie.</label><br>
-				<label><input type="radio" name="pregunta4" value="b"> Desconectar el equipo de la red y avisar al responsable de tecnología o seguridad.</label><br>
-				<label><input type="radio" name="pregunta4" value="c"> Borrar los archivos afectados y seguir trabajando.</label>
+				<legend>4. Descubres que un computador de la empresa tiene archivos cifrados y aparece una solicitud de
+					pago. ¿Qué haces primero?</legend>
+				<label><input type="radio" name="pregunta4" value="a"> Pagar de inmediato sin avisar a
+					nadie.</label><br>
+				<label><input type="radio" name="pregunta4" value="b"> Desconectar el equipo de la red y avisar al
+					responsable de tecnología o seguridad.</label><br>
+				<label><input type="radio" name="pregunta4" value="c"> Borrar los archivos afectados y seguir
+					trabajando.</label>
 			</fieldset>
 
 			<fieldset>
 				<legend>5. ¿Cuál es la mejor práctica para las cuentas de administración de la empresa?</legend>
-				<label><input type="radio" name="pregunta5" value="a"> Usar una sola contraseña para que sea fácil recordarla.</label><br>
-				<label><input type="radio" name="pregunta5" value="b"> Compartir las credenciales entre los encargados de confianza.</label><br>
-				<label><input type="radio" name="pregunta5" value="c"> Usar contraseñas únicas, permisos mínimos y autenticación multifactor.</label>
+				<label><input type="radio" name="pregunta5" value="a"> Usar una sola contraseña para que sea fácil
+					recordarla.</label><br>
+				<label><input type="radio" name="pregunta5" value="b"> Compartir las credenciales entre los encargados
+					de confianza.</label><br>
+				<label><input type="radio" name="pregunta5" value="c"> Usar contraseñas únicas, permisos mínimos y
+					autenticación multifactor.</label>
 			</fieldset>
 
 			<button class="registration-button" type="submit">Ver resultados</button>
 			{% if buenas is not None %}
-				<p class="form-success">Obtuviste {{ buenas }} de 5 respuestas correctas.</p>
+			<p class="form-success">Obtuviste {{ buenas }} de 5 respuestas correctas.</p>
 			{% endif %}
 		</form>
 	</main>
 </body>
+
 </html>
