@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+	{% load static %}
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>{{ perfil.nombre }} - Preguntas de ciberseguridad</title>
+	<link rel="stylesheet" href="{% static 'ciberduo/styles.css' %}">
+</head>
+
+<body>
+	<main class="questionnaire">
+		<header>
+			<a href="{% url 'vistaprincipal' %}" class="boton">Volver al Dashboard</a>
+			<h1>{{ perfil.nombre }}</h1>
+			<p>Selecciona la alternativa que consideres más segura.</p>
+		</header>
+
+		<form method="post">
+			{% csrf_token %}
+
+			{% for pregunta in preguntas %}
+			<fieldset>
+				<legend>{{ forloop.counter }}. {{ pregunta.enunciado }}</legend>
+
+				{% if pregunta.mensaje_simulado %}
+				<p class="mensaje-simulado">"{{ pregunta.mensaje_simulado }}"</p>
+				{% endif %}
+
+				{% for opcion in pregunta.opciones.all %}
+				<label>
+					<input type="radio" name="pregunta_{{ pregunta.id }}" value="{{ opcion.id }}" required>
+					{{ opcion.texto }}
+				</label><br>
+				{% endfor %}
+
+				{% if resultado %}
+					{% for item in resultado.detalle %}
+						{% if item.pregunta.id == pregunta.id %}
+							{% if item.es_correcta %}
+							<p class="form-success">Correcto.</p>
+							{% else %}
+							<p class="form-error">
+								Incorrecto.
+								{% if pregunta.explicacion %}{{ pregunta.explicacion }}{% endif %}
+							</p>
+							{% endif %}
+						{% endif %}
+					{% endfor %}
+				{% endif %}
+			</fieldset>
+			{% empty %}
+			<p>Todavía no hay preguntas cargadas para este perfil.</p>
+			{% endfor %}
+
+			{% if preguntas %}
+			<button class="registration-button" type="submit">Ver resultados</button>
+			{% endif %}
+
+			{% if resultado %}
+			<p class="form-success">
+				Obtuviste {{ resultado.correctas }} de {{ resultado.total }} respuestas correctas.
+			</p>
+			{% endif %}
+		</form>
+	</main>
+</body>
+
+</html>
