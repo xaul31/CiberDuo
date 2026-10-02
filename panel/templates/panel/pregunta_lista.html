@@ -1,0 +1,53 @@
+{% extends 'panel/base.html' %}
+{% block titulo %}Preguntas{% endblock %}
+{% block contenido %}
+<div class="cabecera">
+    <h2>Preguntas</h2>
+    <a class="btn" href="{% url 'panel:pregunta_nueva' %}">+ Nueva pregunta</a>
+</div>
+
+<form method="get" class="filtros">
+    <input type="text" name="q" value="{{ q }}" placeholder="Buscar en el enunciado">
+    <select name="perfil">
+        <option value="">Todos los perfiles</option>
+        {% for p in perfiles %}<option value="{{ p.id }}" {% if perfil_sel == p.id|stringformat:"s" %}selected{% endif %}>{{ p.nombre }}</option>{% endfor %}
+    </select>
+    <select name="amenaza">
+        <option value="">Todas las amenazas</option>
+        {% for a in amenazas %}<option value="{{ a.id }}" {% if amenaza_sel == a.id|stringformat:"s" %}selected{% endif %}>{{ a.nombre }}</option>{% endfor %}
+    </select>
+    <select name="activa">
+        <option value="">Activas e inactivas</option>
+        <option value="1" {% if activa_sel == '1' %}selected{% endif %}>Solo activas</option>
+        <option value="0" {% if activa_sel == '0' %}selected{% endif %}>Solo inactivas</option>
+    </select>
+    <button class="btn btn-sec" type="submit">Filtrar</button>
+</form>
+
+<div class="tabla-wrap">
+    <table>
+        <thead><tr><th>ID</th><th>Enunciado</th><th>Perfil</th><th>Amenaza</th><th>Medio</th><th>Opciones</th><th>Pts</th><th>Orden</th><th>Activa</th><th></th></tr></thead>
+        <tbody>
+        {% for p in preguntas %}
+            <tr>
+                <td>{{ p.id }}</td>
+                <td>{{ p.enunciado|truncatechars:90 }}</td>
+                <td>{{ p.perfil }}</td>
+                <td>{{ p.tipo_amenaza }}</td>
+                <td>{{ p.get_medio_display }}</td>
+                <td>{{ p.n_opciones }}</td>
+                <td>{{ p.puntos }}</td>
+                <td>{{ p.orden }}</td>
+                <td>{% if p.activa %}<span class="badge">Sí</span>{% else %}<span class="badge off">No</span>{% endif %}</td>
+                <td class="acciones">
+                    <a class="btn btn-sec btn-sm" href="{% url 'panel:pregunta_editar' p.pk %}">Editar</a>
+                    <a class="btn btn-peligro btn-sm" href="{% url 'panel:pregunta_eliminar' p.pk %}">Eliminar</a>
+                </td>
+            </tr>
+        {% empty %}
+            <tr><td colspan="10" class="vacio">No hay preguntas con esos filtros.</td></tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

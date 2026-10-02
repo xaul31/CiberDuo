@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'grupo_empresarios',
     'usuarios',
     'contenido',
+    'panel',
 ]
 
 MIDDLEWARE = [

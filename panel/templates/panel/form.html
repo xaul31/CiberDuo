@@ -1,0 +1,25 @@
+{% extends 'panel/base.html' %}
+{% block titulo %}{{ titulo }}{% endblock %}
+{% block contenido %}
+<div class="cabecera"><h2>{{ titulo }}</h2></div>
+<form method="post" class="formulario">
+    {% csrf_token %}
+    {{ form.non_field_errors }}
+    {% for campo in form %}
+        <div class="campo {% if campo.field.widget.input_type == 'checkbox' %}campo-check{% endif %}">
+            {% if campo.field.widget.input_type == 'checkbox' %}
+                {{ campo }}<label for="{{ campo.id_for_label }}">{{ campo.label }}</label>
+            {% else %}
+                <label for="{{ campo.id_for_label }}">{{ campo.label }}</label>
+                {{ campo }}
+            {% endif %}
+            {% if campo.help_text %}<div class="ayuda">{{ campo.help_text }}</div>{% endif %}
+            {{ campo.errors }}
+        </div>
+    {% endfor %}
+    <div class="fila-botones">
+        <button class="btn" type="submit">Guardar</button>
+        <a class="btn btn-sec" href="{% url volver %}">Cancelar</a>
+    </div>
+</form>
+{% endblock %}

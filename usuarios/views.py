@@ -38,11 +38,19 @@ def userLoginView(request):
         form = forms.userLoginForm(request.POST)
         if form.is_valid():
             email = form.cleaned_data['username']
-            usuario = Usuario.objects.filter(email=email).first()
+            usuario = Usuario.objects.select_related('perfil').filter(email=email).first()
             if usuario and check_password(form.cleaned_data['password'], usuario.password):
-                request.session['usuario_id'] = usuario.id
-                return redirect('vistaprincipal')
-            error = 'El correo o la contraseña no son correctos.'
+                if not usuario.activo:
+                    error = 'Tu cuenta está desactivada. Contacta a un administrador.'
+                else:
+                    request.session['usuario_id'] = usuario.id
+                    # Si es administrador, entra directo al panel
+                    if usuario.es_admin:
+                        request.session['admin_id'] = usuario.id
+                        return redirect('panel:dashboard')
+                    return redirect('vistaprincipal')
+            else:
+                error = 'El correo o la contraseña no son correctos.'
 
     return render(request, 'userLogin/userLogin.html', {'form': form, 'error': error})
 
@@ -55,7 +63,11 @@ def userLogoutView(request):
 def login_required(view_func):
     @wraps(view_func)
     def wrapped_view(request, *args, **kwargs):
-        if not request.session.get('usuario_id'):
+        usuario_id = request.session.get('usuario_id')
+        if not usuario_id:
+            return redirect('login')
+        if not Usuario.objects.filter(pk=usuario_id, activo=True).exists():
+            request.session.flush()
             return redirect('login')
         return view_func(request, *args, **kwargs)
 

@@ -1,0 +1,26 @@
+{% extends 'panel/base.html' %}
+{% block titulo %}Tipos de amenaza{% endblock %}
+{% block contenido %}
+<div class="cabecera">
+    <h2>Tipos de amenaza</h2>
+    <a class="btn" href="{% url 'panel:amenaza_nueva' %}">+ Nuevo tipo</a>
+</div>
+<div class="tabla-wrap">
+    <table>
+        <thead><tr><th>ID</th><th>Nombre</th><th>Descripción</th><th>Preguntas</th><th></th></tr></thead>
+        <tbody>
+        {% for a in amenazas %}
+            <tr>
+                <td>{{ a.id }}</td><td>{{ a.nombre }}</td><td>{{ a.descripcion|truncatechars:90 }}</td><td>{{ a.n_preguntas }}</td>
+                <td class="acciones">
+                    <a class="btn btn-sec btn-sm" href="{% url 'panel:amenaza_editar' a.pk %}">Editar</a>
+                    <a class="btn btn-peligro btn-sm" href="{% url 'panel:amenaza_eliminar' a.pk %}">Eliminar</a>
+                </td>
+            </tr>
+        {% empty %}
+            <tr><td colspan="5" class="vacio">No hay tipos de amenaza.</td></tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

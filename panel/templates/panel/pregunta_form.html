@@ -1,0 +1,47 @@
+{% extends 'panel/base.html' %}
+{% block titulo %}{{ titulo }}{% endblock %}
+{% block contenido %}
+<div class="cabecera"><h2>{{ titulo }}</h2></div>
+<form method="post" class="formulario ancho">
+    {% csrf_token %}
+    {{ form.non_field_errors }}
+    {% for campo in form %}
+        <div class="campo {% if campo.field.widget.input_type == 'checkbox' %}campo-check{% endif %}">
+            {% if campo.field.widget.input_type == 'checkbox' %}
+                {{ campo }}<label for="{{ campo.id_for_label }}">{{ campo.label }}</label>
+            {% else %}
+                <label for="{{ campo.id_for_label }}">{{ campo.label }}</label>
+                {{ campo }}
+            {% endif %}
+            {% if campo.help_text %}<div class="ayuda">{{ campo.help_text }}</div>{% endif %}
+            {{ campo.errors }}
+        </div>
+    {% endfor %}
+
+    <h3>Opciones de respuesta</h3>
+    <p class="ayuda">Mínimo 2 opciones y exactamente 1 correcta. Marca "Eliminar" para borrar una opción existente.</p>
+    {{ formset.management_form }}
+    {{ formset.non_form_errors }}
+    <div class="tabla-wrap">
+        <table class="opciones-tabla">
+            <thead><tr><th>Texto</th><th>Correcta</th><th>Retroalimentación</th><th>Orden</th><th>Eliminar</th></tr></thead>
+            <tbody>
+            {% for f in formset %}
+                <tr>
+                    <td>{{ f.id }}{{ f.texto }}{{ f.texto.errors }}</td>
+                    <td>{{ f.es_correcta }}</td>
+                    <td>{{ f.retroalimentacion }}</td>
+                    <td>{{ f.orden }}</td>
+                    <td>{% if f.instance.pk %}{{ f.DELETE }}{% endif %}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="fila-botones">
+        <button class="btn" type="submit">Guardar</button>
+        <a class="btn btn-sec" href="{% url volver %}">Cancelar</a>
+    </div>
+</form>
+{% endblock %}

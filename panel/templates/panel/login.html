@@ -1,0 +1,30 @@
+{% load static %}<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Acceso administradores | CiberDuo</title>
+    <link rel="stylesheet" href="{% static 'panel/panel.css' %}">
+</head>
+<body>
+<main class="login-page">
+    <section class="login-card">
+        <h1>Panel CiberDuo</h1>
+        <p>Acceso solo para administradores.</p>
+        <form method="post">
+            {% csrf_token %}
+            {% if error %}<ul class="mensajes"><li class="error">{{ error }}</li></ul>{% endif %}
+            <div class="campo">
+                <label for="{{ form.email.id_for_label }}">Correo electrónico</label>
+                {{ form.email }}{{ form.email.errors }}
+            </div>
+            <div class="campo">
+                <label for="{{ form.password.id_for_label }}">Contraseña</label>
+                {{ form.password }}{{ form.password.errors }}
+            </div>
+            <button class="btn" type="submit">Entrar</button>
+        </form>
+    </section>
+</main>
+</body>
+</html>

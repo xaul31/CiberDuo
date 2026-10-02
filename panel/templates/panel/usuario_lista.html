@@ -1,0 +1,53 @@
+{% extends 'panel/base.html' %}
+{% block titulo %}Usuarios{% endblock %}
+{% block contenido %}
+<div class="cabecera">
+    <h2>Usuarios</h2>
+    <a class="btn" href="{% url 'panel:usuario_nuevo' %}">+ Nuevo usuario</a>
+</div>
+
+<form method="get" class="filtros">
+    <input type="text" name="q" value="{{ q }}" placeholder="Buscar nombre o correo">
+    <select name="perfil">
+        <option value="">Todos los perfiles</option>
+        <option value="none" {% if perfil_sel == 'none' %}selected{% endif %}>Sin perfil</option>
+        {% for p in perfiles %}<option value="{{ p.id }}" {% if perfil_sel == p.id|stringformat:"s" %}selected{% endif %}>{{ p.nombre }}</option>{% endfor %}
+    </select>
+    <select name="activo">
+        <option value="">Activos e inactivos</option>
+        <option value="1" {% if activo_sel == '1' %}selected{% endif %}>Solo activos</option>
+        <option value="0" {% if activo_sel == '0' %}selected{% endif %}>Solo inactivos</option>
+    </select>
+    <button class="btn btn-sec" type="submit">Filtrar</button>
+</form>
+
+<div class="tabla-wrap">
+    <table>
+        <thead>
+            <tr><th>ID</th><th>Nombre</th><th>Correo</th><th>Contraseña (hash)</th><th>Perfil ID</th><th>Fecha registro</th><th>Activo</th><th></th></tr>
+        </thead>
+        <tbody>
+        {% for u in usuarios %}
+            <tr>
+                <td>{{ u.id }}</td>
+                <td>{{ u.nombre }}</td>
+                <td>{{ u.email }}</td>
+                <td><div class="hash" title="{{ u.password }}">{{ u.password }}</div></td>
+                <td>{% if u.perfil %}{{ u.perfil_id }} · {{ u.perfil.nombre }}{% if u.es_admin %} <span class="badge adm">admin</span>{% endif %}{% else %}—{% endif %}</td>
+                <td>{{ u.fecha_registro|date:"d/m/Y H:i" }}</td>
+                <td>{% if u.activo %}<span class="badge">Sí</span>{% else %}<span class="badge off">No</span>{% endif %}</td>
+                <td class="acciones">
+                    <a class="btn btn-sec btn-sm" href="{% url 'panel:usuario_editar' u.pk %}">Editar</a>
+                    <form class="inline" method="post" action="{% url 'panel:usuario_toggle' u.pk %}">{% csrf_token %}
+                        <button class="btn btn-sec btn-sm" type="submit">{% if u.activo %}Desactivar{% else %}Activar{% endif %}</button>
+                    </form>
+                    <a class="btn btn-peligro btn-sm" href="{% url 'panel:usuario_eliminar' u.pk %}">Eliminar</a>
+                </td>
+            </tr>
+        {% empty %}
+            <tr><td colspan="8" class="vacio">No hay usuarios con esos filtros.</td></tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

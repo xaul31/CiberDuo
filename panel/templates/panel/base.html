@@ -1,0 +1,35 @@
+{% load static %}<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block titulo %}Panel{% endblock %} | CiberDuo Admin</title>
+    <link rel="stylesheet" href="{% static 'panel/panel.css' %}">
+</head>
+<body>
+<div class="layout">
+    <aside class="sidebar">
+        <h1>CiberDuo</h1>
+        <small>Panel de administración</small>
+        <nav>
+            <a href="{% url 'panel:dashboard' %}" class="{% if seccion == 'dashboard' %}activo{% endif %}">Resumen</a>
+            <a href="{% url 'panel:usuario_lista' %}" class="{% if seccion == 'usuarios' %}activo{% endif %}">Usuarios</a>
+            <a href="{% url 'panel:pregunta_lista' %}" class="{% if seccion == 'preguntas' %}activo{% endif %}">Preguntas</a>
+            <a href="{% url 'panel:perfil_lista' %}" class="{% if seccion == 'perfiles' %}activo{% endif %}">Perfiles</a>
+            <a href="{% url 'panel:amenaza_lista' %}" class="{% if seccion == 'amenazas' %}activo{% endif %}">Tipos de amenaza</a>
+        </nav>
+        <small>{{ request.admin.email }}</small>
+        <a class="salir" href="{% url 'panel:logout' %}">Cerrar sesión</a>
+    </aside>
+
+    <main class="contenido">
+        {% if messages %}
+        <ul class="mensajes">
+            {% for m in messages %}<li class="{{ m.tags }}">{{ m }}</li>{% endfor %}
+        </ul>
+        {% endif %}
+        {% block contenido %}{% endblock %}
+    </main>
+</div>
+</body>
+</html>

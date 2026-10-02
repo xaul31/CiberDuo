@@ -1,0 +1,36 @@
+{% extends 'panel/base.html' %}
+{% block titulo %}Resumen{% endblock %}
+{% block contenido %}
+<div class="cabecera"><h2>Resumen</h2></div>
+
+<div class="tarjetas">
+    <div class="tarjeta"><div class="num">{{ total_usuarios }}</div><div class="etq">Usuarios ({{ usuarios_activos }} activos)</div></div>
+    <div class="tarjeta"><div class="num">{{ total_preguntas }}</div><div class="etq">Preguntas ({{ preguntas_activas }} activas)</div></div>
+    <div class="tarjeta"><div class="num">{{ total_perfiles }}</div><div class="etq">Perfiles</div></div>
+    <div class="tarjeta"><div class="num">{{ total_amenazas }}</div><div class="etq">Tipos de amenaza</div></div>
+</div>
+
+<div class="cabecera"><h2 style="font-size:1.3rem">Últimos registros</h2><a class="btn btn-sec btn-sm" href="{% url 'panel:usuario_lista' %}">Ver todos</a></div>
+<div class="tabla-wrap">
+    <table>
+        <thead><tr><th>ID</th><th>Nombre</th><th>Correo</th><th>Perfil</th><th>Registro</th></tr></thead>
+        <tbody>
+        {% for u in ultimos_usuarios %}
+            <tr><td>{{ u.id }}</td><td>{{ u.nombre }}</td><td>{{ u.email }}</td><td>{{ u.perfil|default:"—" }}</td><td>{{ u.fecha_registro|date:"d/m/Y H:i" }}</td></tr>
+        {% empty %}
+            <tr><td colspan="5" class="vacio">Sin usuarios todavía.</td></tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<div class="cabecera" style="margin-top:28px"><h2 style="font-size:1.3rem">Preguntas por perfil</h2></div>
+<div class="tabla-wrap">
+    <table>
+        <thead><tr><th>Perfil</th><th>Preguntas</th></tr></thead>
+        <tbody>
+        {% for p in preguntas_por_perfil %}<tr><td>{{ p.nombre }}</td><td>{{ p.n }}</td></tr>{% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

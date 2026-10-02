@@ -1,0 +1,13 @@
+{% extends 'panel/base.html' %}
+{% block titulo %}Confirmar{% endblock %}
+{% block contenido %}
+<div class="cabecera"><h2>Confirmar eliminación</h2></div>
+<form method="post" class="formulario">
+    {% csrf_token %}
+    <p>¿Seguro que quieres eliminar {{ descripcion }}? Esta acción no se puede deshacer.</p>
+    <div class="fila-botones">
+        <button class="btn btn-peligro" type="submit">Sí, eliminar</button>
+        <a class="btn btn-sec" href="{% url volver %}">Cancelar</a>
+    </div>
+</form>
+{% endblock %}
