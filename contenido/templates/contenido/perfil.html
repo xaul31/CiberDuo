@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{perfil.nombre}} - CiberDuo</title>
+</head>
+<body>
+
+    <h1>{{ perfil.nombre }}</h1>
+
+    <p>{{ perfil.descripcion }}</p>
+
+    <h2>Preguntas</h2>
+        {% for pregunta in preguntas %}
+
+            <h3>{{ pregunta.enunciado }}</h3>
+
+            <p>{{ pregunta.mensaje_simulado }}</p>
+
+            <form method="POST">
+                {% csrf_token %}
+
+                <input type="hidden" name="pregunta" value="{{ pregunta.id }}">
+
+                {% for opcion in pregunta.opcion_set.all %}
+
+                    <p>
+                        <input
+                            type="radio"
+                            name="opcion"
+                            value="{{ opcion.id }}"
+                            required
+                        >
+
+                        {{ opcion.texto }}
+                    </p>
+
+                {% endfor %}
+
+                <button type="submit">Responder</button>
+
+            </form>
+            {% if resultado %}
+                <p>{{ resultado }}</p>
+                <p>{{ retroalimentacion }}</p>
+            {% endif %}
+
+    {% empty %}
+
+        <p>No hay preguntas disponibles para este perfil.</p>
+
+    {% endfor %}
+
+    <a href="/">Volver</a>
+    
+</body>
+</html>
