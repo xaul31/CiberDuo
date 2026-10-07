@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Crear pregunta - CiberDuo</title>
+</head>
+
+<body>
+    <h1>Crear pregunta</h1>
+    <form method="POST">
+        {% csrf_token %}
+        <p>
+            <label>Perfil:</label>
+
+            <select name="perfil" required>
+                {% for perfil in perfiles %}
+                    <option value="{{ perfil.id }}">
+                        {{ perfil.nombre }}
+                    </option>
+                {% endfor %}
+            </select>
+        </p>
+
+        <p>
+            <label>Tipo de amenaza:</label>
+
+            <select name="tipo_amenaza" required>
+                {% for tipo in tipos_amenaza %}
+                    <option value="{{ tipo.id }}">
+                        {{ tipo.nombre }}
+                    </option>
+                {% endfor %}
+            </select>
+        </p>
+
+        <p>
+            <label>Medio:</label>
+
+            <select name="medio" required>
+                {% for medio in medios %}
+                    <option value="{{ medio.id }}">
+                        {{ medio.nombre }}
+                    </option>
+                {% endfor %}
+            </select>
+        </p>
+
+        <p>
+            <label>Enunciado:</label><br>
+
+            <textarea name="enunciado" required></textarea>
+        </p>
+
+        <p>
+            <label>Mensaje simulado:</label><br>
+
+            <textarea name="mensaje_simulado" required></textarea>
+        </p>
+
+        <p>
+            <label>Explicación:</label><br>
+
+            <textarea name="explicacion" required></textarea>
+        </p>
+
+        <p>
+            <label>Puntos:</label>
+
+            <input type="number" name="puntos" min="1" required>
+        </p>
+
+        <button type="submit">Crear pregunta</button>
+    </form>
+
+    <p>
+        <a href="{% url 'lista_preguntas' %}">
+            Volver
+        </a>
+    </p>
+
+</body>
+</html>

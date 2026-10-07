@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Administrar Preguntas</title>
+</head>
+<body>
+    <h1>Administrar Preguntas</h1>
+    <p>
+        <a href="{% url 'crear_pregunta' %}">Crear nueva pregunta</a>
+    </p>
+
+    <table border="1">
+
+        <tr>
+            <th>ID</th>
+            <th>Pregunta</th>
+            <th>Perfil</th>
+            <th>Amenaza</th>
+            <th>Puntos</th>
+            <th>Activa</th>
+            <th>Acciones</th>
+        </tr>
+
+        {% for pregunta in preguntas %}
+            <tr>
+                <td>{{ pregunta.id }}</td>
+                <td>{{ pregunta.enunciado }}</td>
+                <td>{{ pregunta.perfil.nombre }}</td>
+                <td>{{ pregunta.tipo_amenaza.nombre }}</td>
+                <td>{{ pregunta.puntos }}</td>
+                <td>{{ pregunta.activa }}</td>
+                <td>
+                    <a href="{% url 'editar_pregunta' pregunta.id %}">Editar</a>
+                </td>
+            </tr>
+        {% empty %}
+            <tr>
+                <td colspan="7">No existen preguntas.</td>
+            </tr>
+        {% endfor %}
+    </table>
+    <a href="{% url 'inicio' %}">Volver al inicio</a>
+    
+</body>
+</html>

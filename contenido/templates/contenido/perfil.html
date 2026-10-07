@@ -16,6 +16,8 @@
 
             <h3>{{ pregunta.enunciado }}</h3>
 
+            <p>valor: {{ pregunta.puntos }} puntos</p>
+
             <p>{{ pregunta.mensaje_simulado }}</p>
 
             <form method="POST">
@@ -44,6 +46,11 @@
             {% if resultado %}
                 <p>{{ resultado }}</p>
                 <p>{{ retroalimentacion }}</p>
+                <p>Puntos obtenidos: {{ puntos_obtenidos }}</p>
+
+                {% if mensaje_puntos %}
+                    <p>{{ mensaje_puntos }}</p>
+                {% endif %}
             {% endif %}
 
     {% empty %}

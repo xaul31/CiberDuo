@@ -5,24 +5,42 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CiberDuo</title>
 </head>
+
 <body>
+
     {% if user.is_authenticated %}
         <p>Bienvenido, {{ user.username }}</p>
+        {% if user.is_staff %}
+            <p>
+                <a href="{% url 'lista_preguntas' %}">
+                    Administrar preguntas
+                </a>
+            </p>
+        {% endif %}
+
         <a href="{% url 'cerrar_sesion' %}">Cerrar Sesión</a>
+
     {% else %}
+
         <a href="{% url 'iniciar_sesion' %}">Iniciar Sesión</a>
         <a href="{% url 'registro' %}">Crear cuenta</a>
+
     {% endif %}
+
+
     <h1>Bienvenido a CiberDuo</h1>
-    <p>
-        <a href="{% url 'registro' %}">Crear cuenta</a>
-    </p>
 
     <h2>Selecciona tu perfil</h2>
+
     <ul>
         {% for perfil in perfiles %}
-            <li><a href="{% url 'perfil' perfil.slug %}">{{ perfil.nombre }}</a></li>
+            <li>
+                <a href="{% url 'perfil' perfil.slug %}">
+                    {{ perfil.nombre }}
+                </a>
+            </li>
         {% endfor %}
     </ul>
+
 </body>
 </html>
