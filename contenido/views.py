@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import get_object_or_404, render, redirect
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from .models import Perfil, Pregunta, Opcion, RegistroRespuesta, TipoAmenaza, Medio
@@ -96,7 +96,17 @@ def cerrar_sesion(request):
 @staff_member_required
 def lista_preguntas(request):
     preguntas = Pregunta.objects.all()
-    return render(request, 'contenido/lista_preguntas.html', {'preguntas': preguntas})
+    perfiles = Perfil.objects.all()
+    busqueda = request.GET.get('buscar', '')
+    perfil_id = request.GET.get('perfil', '')
+
+    if busqueda:
+        preguntas = preguntas.filter(enunciado__icontains=busqueda)
+
+    if perfil_id:
+        preguntas = preguntas.filter(perfil_id=perfil_id)
+
+    return render(request, 'contenido/lista_preguntas.html', {'preguntas': preguntas, 'perfiles': perfiles, 'busqueda': busqueda, 'perfil_id': perfil_id})
 
 @staff_member_required
 def crear_pregunta(request):
@@ -161,3 +171,15 @@ def editar_pregunta(request, pregunta_id):
         return redirect('lista_preguntas')
 
     return render(request, 'contenido/editar_pregunta.html', {'pregunta': pregunta, 'perfiles': perfiles, 'tipos_amenaza': tipos_amenaza, 'medios': medios})
+
+
+@staff_member_required
+def eliminar_pregunta(request, pregunta_id):
+
+    pregunta = Pregunta.objects.get(id=pregunta_id)
+
+    if request.method == 'POST':
+        pregunta.delete()
+        return redirect('lista_preguntas')
+
+    return render(request, 'contenido/eliminar_pregunta.html', {'pregunta': pregunta})

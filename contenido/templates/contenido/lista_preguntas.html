@@ -7,6 +7,27 @@
 </head>
 <body>
     <h1>Administrar Preguntas</h1>
+
+    <h2>Bsucar y filtrar preguntas</h2>
+
+    <form method="GET">
+        <label>Buscar:</label>
+        <input type="text" name="buscar" value="{{ busqueda }}" placeholder="Buscar por enunciado">
+        <label>Perfil:</label>
+        <select name="perfil">
+            <option value="">Todos los perfiles</option>
+
+            {% for perfil in perfiles %}
+                <option value="{{ perfil.id}}"
+                    {% if perfil_id == perfil.id|stringformat:"s" %}selected{% endif %}>
+                    {{ perfil.nombre }}
+                </option>
+            {% endfor %}
+        </select>
+        <button type="submit">Buscar y filtrar</button>
+
+        <a href="{% url 'lista_preguntas' %}">Limpiar filtros</a>
+    </form>
     <p>
         <a href="{% url 'crear_pregunta' %}">Crear nueva pregunta</a>
     </p>
@@ -33,11 +54,12 @@
                 <td>{{ pregunta.activa }}</td>
                 <td>
                     <a href="{% url 'editar_pregunta' pregunta.id %}">Editar</a>
+                    <a href="{% url 'eliminar_pregunta' pregunta.id %}">Eliminar</a>
                 </td>
             </tr>
         {% empty %}
             <tr>
-                <td colspan="7">No existen preguntas.</td>
+                <td colspan="7">No se encontraron preguntas.</td>
             </tr>
         {% endfor %}
     </table>
